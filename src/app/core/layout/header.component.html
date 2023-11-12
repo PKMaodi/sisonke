@@ -1,0 +1,140 @@
+
+<style>
+  
+  @-webkit-keyframes typing { from { width: 0; } }
+  @-webkit-keyframes blink-caret { 100% { border-color: transparent; } }
+
+  h1 { 
+    font: bold 100% Consolas, Monaco, monospace;
+    border-right: .1em solid black;
+    width: 16.5em; 
+    width: 110ch;
+    margin: 2em 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-animation: typing 2s steps(21, end),
+              blink-caret .5s step-end infinite alternate;
+  }
+  section{
+    padding: 0;
+    padding-left: 12%;
+    padding-right: 12%;
+    width: 10%;
+  }
+
+body {
+	/*To hide the horizontal scroller appearing during the animation*/
+	overflow: hidden;
+}
+
+#clouds{
+	padding: 100px 0;
+	background: #c9dbe9;
+	background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+	background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
+	background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+}
+
+/*Time to finalise the cloud shape*/
+.cloud {
+	width: 200px; height: 60px;
+	background: #fff;
+	
+	border-radius: 200px;
+	-moz-border-radius: 200px;
+	-webkit-border-radius: 200px;
+	
+	position: relative; 
+}
+
+.cloud:before, .cloud:after {
+	content: '';
+	position: absolute; 
+	background: #fff;
+	width: 100px; height: 80px;
+	position: absolute; top: -15px; left: 10px;
+	
+	border-radius: 100px;
+	-moz-border-radius: 100px;
+	-webkit-border-radius: 100px;
+	
+	-webkit-transform: rotate(30deg);
+	transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+}
+
+.cloud:after {
+	width: 120px; height: 120px;
+	top: -55px; left: auto; right: 15px;
+}
+
+</style>
+<nav class="navbar navbar-light">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Sisonke</a>
+
+    <!-- Show this for logged out users -->
+    <ul *appShowAuthed="false" class="nav navbar-nav pull-xs-right">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">
+          Sign in
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/register" routerLinkActive="active">
+          Sign up
+        </a>
+      </li>
+    </ul>
+
+    
+
+    <!-- Show this for logged in users -->
+    <ul *appShowAuthed="true" class="nav navbar-nav pull-xs-right">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Home
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/editor" routerLinkActive="active">
+          <i class="ion-compose"></i>&nbsp;Log a project
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/settings" routerLinkActive="active">
+          <i class="ion-gear-a"></i>&nbsp;Account Settings
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="currentUser$ | async as currentUser">
+        <a
+          class="nav-link"
+          [routerLink]="['/profile', currentUser.username]"
+          routerLinkActive="active"
+        >
+          <img
+            [src]="currentUser.image"
+            *ngIf="currentUser.image"
+            class="user-pic"
+          />
+          {{ currentUser.username }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<section id="loogedoutBG" *appShowAuthed="false">
+  <h1>Sisonke is a cutting-edge blockchain-based crowdfunding platform that transforms the way communities propose,</h1> 
+  <h1>fund, and realize projects.</h1>
+  <div id="clouds">
+  </div>
+</section>
